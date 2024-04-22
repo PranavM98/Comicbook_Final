@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Book Generator</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Progress Bar -->
+
+    <div class="container">
+        <h1>Create Your Comic Story</h1>
+        <form method="POST" action="{{ url_for('index') }}">
+            <div class="form-group">
+                <label for="prompt">Prompt:</label>
+                <input type="text" id="prompt" name="prompt" required value="{{ prompt }}">
+            </div>
+            <div class="form-group">
+                <label for="style">Style:</label>
+                <input type="text" id="style" name="style" required value="{{ style }}">
+            </div>
+            <button type="submit">Generate Story</button>
+        </form>
+
+<!--         
+        <form method="POST" action="{{ url_for('index') }}">
+            <div class="form-group">
+                <label for="prompt">Prompt:</label>
+                <input type="text" id="prompt" name="prompt" required>
+            </div>
+            <div class="form-group">
+                <label for="style">Style:</label>
+                <input type="text" id="style" name="style" required>
+            </div>
+            <button type="submit">Generate Story</button>
+        </form> -->
+        {% if story_panel %}
+            <div class="results">
+                {% for scene in story_panel %}
+                    <div class="scene">
+                        <p>{{ scene }}</p>
+                    </div>
+                {% endfor %}
+              
+
+                </form>
+
+            </div>
+            <form method="POST" action="{{ url_for('generate_comic') }}">
+                <button type="submit">Generate Comic</button>
+                
+        {% endif %}
+        {% if comic_img_url %}
+        <div class="comic">
+            <img src="{{ comic_img_url }}" alt="Generated Comic">
+                         <a href="../static/strip.png" download="Comic.jpg" class="button-container" style="flex: 1;">Download Image</a>
+
+                         <a href="" onclick="printImage()"class="button-container" style="flex: 1;">Print Image</a>
+
+
+
+<!-- 
+                <button style="flex: 1;" class=".button-container container" >Print</button> -->
+        </div>
+
+        {% endif %}
+    </div>
+    <script>
+
+        
+        function printImage() {
+            var img = document.querySelector('.comic img').src;
+            var windowContent = '<!DOCTYPE html>';
+            windowContent += '<html>';
+            windowContent += '<head><title>Print canvas</title></head>';
+            windowContent += '<body>';
+            windowContent += '<img src="' + img + '">';
+            windowContent += '</body>';
+            windowContent += '</html>';
+            const printWin = window.open('', '', 'width=340,height=220');
+            printWin.document.open();
+            printWin.document.write(windowContent);
+            printWin.document.close();
+            printWin.focus();
+            printWin.print();
+            printWin.close();
+        }
+        </script>
+
+
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Book Generator</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Comic Story</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="prompt">Prompt:</label>
+                <input type="text" id="prompt" name="prompt" required>
+            </div>
+            <div class="form-group">
+                <label for="style">Style:</label>
+                <input type="text" id="style" name="style" required>
+            </div>
+            <button type="submit">Generate Story</button>
+        </form>
+        {% if story_panel %}
+            <div class="results">
+                {% for scene in story_panel %}
+                    <div class="scene">
+                        <p>{{ scene }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> -->
